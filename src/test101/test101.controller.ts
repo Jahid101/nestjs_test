@@ -57,8 +57,9 @@ export class Test101Controller {
     async findOne(
         @Param('id')
         id: string,
-    ): Promise<Test101> {
+    ): Promise<Test101[]> {
         return this.Test101Service.findById(id);
+        // return this.Test101Service.findById(id);
     }
 
 

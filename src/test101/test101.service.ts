@@ -23,8 +23,18 @@ export class Test101Service {
     }
 
 
-    async findById(id: string): Promise<Test101> {
-        const test = await this.testModel.findById(id);
+    async findById(id: string): Promise<Test101[]> {
+        // const test = await this.testModel.findById(id);
+        const test = await this.testModel.aggregate([
+            {
+                $lookup: {
+                    from: "comments",
+                    localField: "_id",
+                    foreignField: "testId",
+                    as: "commentInfo",
+                },
+            },
+        ]);
 
         if (!test) {
             throw new NotFoundException("Could not find.")
